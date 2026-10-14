@@ -1,0 +1,181 @@
+openapi: 3.2.0
+info:
+  title: StatOrigin Industries API
+  version: 1.0.0
+  summary: Free, open industry statistics with complete primary-source provenance.
+  description: 'Every response carries the full provenance of each data point: the publishing
+
+    organisation, report title, publication date, page or table locator, the verbatim
+
+    sentence the value was extracted from, and a working link to the original document.'
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  contact:
+    name: StatOrigin
+    url: https://statorigin.org
+servers:
+- url: https://statorigin.org/api/v1
+tags:
+- name: Industries
+  description: ISIC Rev.4 classification
+paths:
+  /industries:
+    get:
+      tags:
+      - Industries
+      summary: List industries
+      description: 'The ISIC Rev.4 tree: 21 sections and 88 divisions.'
+      operationId: listIndustries
+      parameters:
+      - name: level
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 4
+        description: 1 = section, 2 = division
+      - name: parent
+        in: query
+        schema:
+          type: string
+        description: Parent ISIC code
+        example: C
+      responses:
+        '200':
+          description: Industry list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+  /industries/{slug}:
+    get:
+      tags:
+      - Industries
+      summary: Get one industry
+      description: Industry detail plus a coverage summary, its indicators, regions and sources.
+      operationId: getIndustry
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+        example: electric-vehicles
+      responses:
+        '200':
+          description: Industry detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /industries/{slug}/export.xlsx:
+    get:
+      tags:
+      - Industries
+      summary: Download industry data as Excel
+      description: 'Provenance-rich Excel: every row includes source organisation, document URL, locator, quote and verified_at with compilation and source licenses. Workbooks above 16 MiB or Excel cell limits return 413; use CSV without truncation.'
+      operationId: exportIndustryXlsx
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+        example: electric-vehicles
+      responses:
+        '200':
+          description: Excel download
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '413':
+          description: Workbook limit exceeded; use CSV
+  /industries/{slug}/export.csv:
+    get:
+      tags:
+      - Industries
+      summary: Download industry data as CSV
+      description: 'Provenance-rich CSV: every row includes source organisation, document URL, locator, quote and verified_at so a spreadsheet export remains citable.'
+      operationId: exportIndustryCsv
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+        example: electric-vehicles
+      responses:
+        '200':
+          description: CSV download
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            docs:
+              type: string
+              format: uri
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        attribution:
+          type: string
+        license:
+          type: string
+          format: uri
+        docs:
+          type: string
+          format: uri

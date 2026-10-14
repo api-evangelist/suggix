@@ -1,0 +1,96 @@
+openapi: 3.2.0
+info:
+  title: StatOrigin Search API
+  version: 1.0.0
+  summary: Free, open industry statistics with complete primary-source provenance.
+  description: 'Every response carries the full provenance of each data point: the publishing
+
+    organisation, report title, publication date, page or table locator, the verbatim
+
+    sentence the value was extracted from, and a working link to the original document.'
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  contact:
+    name: StatOrigin
+    url: https://statorigin.org
+servers:
+- url: https://statorigin.org/api/v1
+tags:
+- name: Search
+  description: Full-text search
+paths:
+  /search:
+    get:
+      tags:
+      - Search
+      summary: Full-text search
+      description: Searches indicator names, region names, industry names, source organisations and the verbatim source quotes.
+      operationId: search
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 2
+          maxLength: 120
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 25
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          description: Invalid query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            docs:
+              type: string
+              format: uri
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        attribution:
+          type: string
+        license:
+          type: string
+          format: uri
+        docs:
+          type: string
+          format: uri

@@ -1,0 +1,260 @@
+# Suggix
+
+> Suggix is a user-driven product planning and management platform that helps SaaS teams collect customer feedback, turn feedback into actionable product work, manage roadmaps, and communicate shipped updates through changelogs.
+
+Suggix connects the product feedback loop:
+
+Customer feedback → Product planning → Roadmap → Product delivery → Changelog
+
+The platform is designed primarily for SaaS companies, startups, indie developers, and small product teams.
+
+## Product
+
+* [Suggix Homepage](https://www.suggix.com/): Overview of Suggix and its product feedback, roadmap, and changelog capabilities.
+* [Customer Feedback](https://www.suggix.com/features/feedback): Collect, organize, discuss, prioritize, and manage customer feedback and feature requests.
+* [Product Roadmap](https://www.suggix.com/features/roadmap): Turn validated feedback into structured product work with statuses, priorities, owners, due dates, and roadmap planning.
+* [Product Changelog](https://www.suggix.com/features/changelog): Publish product releases, new features, improvements, bug fixes, and other product updates.
+* [Product Management](https://www.suggix.com/features/product-management): Manage product work from customer feedback through delivery.
+* [Pricing](https://www.suggix.com/pricing): Suggix pricing and plan information.
+
+## Customer Feedback
+
+Suggix provides a centralized place for collecting and managing customer feedback.
+
+Key capabilities include:
+
+* Feedback boards
+* Feature requests
+* Upvoting
+* Comments and discussions
+* User identity
+* Tags
+* Filtering
+* Rich-text feedback
+* Feedback prioritization
+* Feedback status
+* Assigned owners
+* Due dates
+* Notifications
+* Public feedback portals
+
+Feedback can be turned into actionable product work instead of remaining as unstructured requests.
+
+## Product Roadmap
+
+Suggix connects customer feedback with product execution.
+
+Roadmap items can include:
+
+* Status
+* Priority
+* Owner
+* Due date
+* Tags
+* Progress
+* Release planning
+
+Teams can use roadmap views to communicate planned, in-progress, and completed work to both internal teams and customers.
+
+## Changelog
+
+Suggix includes a built-in product changelog for communicating shipped work to users.
+
+Key capabilities include:
+
+* Product releases
+* Feature announcements
+* Bug fixes
+* Improvements
+* Drafts
+* Scheduled publishing
+* Rich content
+* Images and media
+* User notifications
+
+The changelog closes the loop between customer feedback and shipped product improvements.
+
+## MCP
+
+Suggix provides a remote Model Context Protocol (MCP) server that allows AI assistants and coding agents to interact directly with Suggix workspaces.
+
+* [Suggix MCP](https://help.suggix.com/mcp/overview): MCP overview, capabilities, authentication, and supported AI clients.
+* [Claude Code MCP Setup](https://help.suggix.com/mcp/claude-code): Connect Suggix to Claude Code.
+* [Codex MCP Setup](https://help.suggix.com/mcp/codex): Connect Suggix to ChatGPT/Codex.
+* [Cursor MCP Setup](https://help.suggix.com/mcp/cursor): Connect Suggix to Cursor.
+* [Antigravity MCP Setup](https://help.suggix.com/mcp/antigravity): Connect Suggix to Antigravity.
+
+MCP endpoint:
+
+https://mcp.suggix.com/mcp
+
+Authentication uses a Suggix MCP key as a Bearer token.
+
+Example:
+
+Authorization: Bearer YOUR_MCP_KEY
+
+Suggix MCP is a remote service. Clients do not need to install or maintain a local MCP server.
+
+## MCP Capabilities
+
+Suggix MCP currently exposes tools for working with core product-management data.
+
+### Feedback
+
+* `feedback_list`
+* `feedback_get`
+* `feedback_create`
+* `feedback_update`
+* `feedback_delete`
+
+AI agents can search, inspect, create, update, and delete feedback.
+
+Feedback can contain information such as:
+
+* Board
+* Title
+* Description
+* Status
+* Priority
+* Owner
+* Due date
+* Tags
+
+### Comments
+
+* `comment_list`
+* `comment_create`
+* `comment_update`
+* `comment_delete`
+
+AI agents can read comments and replies associated with feedback items.
+
+### Roadmap
+
+* `roadmap_list`
+* `roadmap_update`
+
+AI agents can inspect roadmap items and update supported product-planning fields such as:
+
+* Status
+* Owner
+* Priority
+* Due date
+
+### Changelog
+
+* `changelog_list`
+* `changelog_get`
+* `changelog_create`
+* `changelog_update`
+* `changelog_delete`
+
+AI agents can inspect, create, update, publish, schedule, and delete changelog entries.
+
+### Workspace Context
+
+* `workspace_context`
+
+AI agents can retrieve workspace information needed to work with Suggix, including:
+
+* Boards
+* Statuses
+* Tags
+
+This allows agents to discover valid workspace IDs and configuration before creating or updating product data.
+
+### Users
+
+* `user_list`
+* `user_get`
+* `user_update`
+
+AI agents can list and inspect workspace users and update supported user attributes.
+
+## AI Agent Workflows
+
+Suggix MCP can be used for workflows such as:
+
+### Feedback triage
+
+An AI agent can find recent feedback, inspect customer discussions, identify relevant requests, and update their statuses.
+
+### Product planning
+
+An AI agent can review roadmap items and update their priority, status, owner, or due date.
+
+### Feedback-to-roadmap workflow
+
+An AI agent can inspect customer feedback and use workspace context to create or update product work.
+
+### Changelog generation
+
+An AI agent can inspect completed product work and create changelog entries describing shipped features and fixes.
+
+### Product operations
+
+AI agents can combine feedback, roadmap, changelog, comments, workspace context, and user information to automate parts of the product-management workflow.
+
+## AI Clients
+
+Suggix MCP is designed to work with MCP-compatible AI clients.
+
+Supported setup guides currently include:
+
+* Claude Code
+* ChatGPT / Codex
+* Cursor
+* Antigravity
+
+Other MCP-compatible clients may also connect using the remote Suggix MCP endpoint.
+
+## Resources
+
+* [MCP Documentation](https://help.suggix.com/mcp/overview)
+* [Help Center](https://help.suggix.com)
+* [Blog](https://www.suggix.com/blog)
+* [Tools](https://www.suggix.com/tools)
+
+## Comparisons
+
+Suggix provides comparison pages covering customer feedback and product-management alternatives.
+
+* [Suggix vs Canny](https://www.suggix.com/compare/canny)
+* [Suggix vs Featurebase](https://www.suggix.com/compare/featurebase)
+* [Suggix vs UserJot](https://www.suggix.com/compare/userjot)
+* [Suggix vs UserVoice](https://www.suggix.com/compare/uservoice)
+* [Suggix vs Nolt](https://www.suggix.com/compare/nolt)
+* [Suggix vs Productboard](https://www.suggix.com/compare/productboard)
+* [Suggix vs ProductPlan](https://www.suggix.com/compare/productplan)
+
+## Blog
+
+Suggix publishes articles about:
+
+* Customer feedback management
+* Product management
+* Product roadmaps
+* Changelogs
+* SaaS growth
+* AI coding agents
+* MCP
+* AI-assisted product development
+
+[Visit the Suggix Blog](https://www.suggix.com/blog)
+
+## Product Positioning
+
+Suggix is not primarily a general-purpose project-management or issue-tracking system.
+
+Its core focus is the connection between customer feedback and product delivery:
+
+Feedback → Prioritization → Product work → Roadmap → Release → Changelog
+
+Suggix is particularly relevant for SaaS founders, indie developers, startups, and small product teams that want customer feedback and product planning in one workflow.
+
+## Official Source
+
+For the most current information about Suggix, use the official Suggix website:
+
+https://www.suggix.com/

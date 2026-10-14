@@ -1,28 +1,180 @@
 aid: suggix
+
 name: Suggix
-description: 'Suggix is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
-  and added to the network as a stub for full-pipeline profiling.'
+
+image: https://res.suggix.com/common/og.png
+
+description: Suggix provides a SaaS platform for collecting and managing customer feedback, roadmaps, and changelogs. It enables product teams
+  to centralize user suggestions, prioritize features, and communicate updates through a public changelog. The service includes tools for tagging,
+  voting, discussion threads, and advanced filtering, helping companies turn raw feedback into actionable product decisions. A 14‑day free trial
+  is available without a credit card.
+
 url: https://raw.githubusercontent.com/api-evangelist/suggix/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:new-submission
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-14 (modular-v1; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-10-14'
+
 modified: '2026-10-14'
+
 tags:
-- Company
-apis: []
+- SaaS
+- Feedback
+- Roadmap
+- Changelog
+- Product Management
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/suggix-agentic-access.yml
+- type: Plans
+  url: plans/suggix-plans-pricing.yml
+- type: Spectral
+  url: rules/suggix-rules.yml
+- type: JSONLD
+  url: json-ld/suggix-context.jsonld
+- type: Vocabulary
+  url: vocabulary/suggix-vocabulary.yml
+- type: DataModel
+  url: data-model/suggix-data-model.yml
+- type: Authentication
+  url: authentication/suggix-authentication.yml
+- type: ErrorCatalog
+  url: errors/suggix-problem-types.yml
+- type: Conformance
+  url: conformance/suggix-conformance.yml
+- type: LLMsTxt
+  url: llms/suggix-llms.txt
+- type: AgentCard
+  url: a2a/suggix-a2a.yml
+- type: Hosts
+  url: hosts/suggix-hosts.yml
+- type: Vendors
+  url: vendors/suggix-vendors.yml
+- type: ChangeLog
+  url: https://feedback.suggix.com/changelog
+- type: GettingStarted
+  url: https://help.suggix.com/mcp/claude-code
+- type: DomainSecurity
+  url: security/suggix-domain-security.yml
 - type: Website
   url: https://www.suggix.com
 - type: Documentation
   url: https://help.suggix.com/mcp/overview
+- type: Blog
+  url: https://www.suggix.com/blog
+- type: Pricing
+  url: https://www.suggix.com/pricing
+- type: SignUp
+  url: https://www.suggix.com/signup
+- type: TermsOfService
+  url: https://www.suggix.com/terms
+- type: PrivacyPolicy
+  url: https://www.suggix.com/privacy
+- type: Roadmap
+  url: https://feedback.suggix.com/roadmap
+- type: Support
+  url: https://help.suggix.com
+- type: DeveloperPortal
+  url: https://help.suggix.com
+- type: APIReference
+  url: https://help.suggix.com/mcp/overview
+
+apis:
+- name: Suggix MCP
+  description: >-
+    Connect your AI client to Suggix feedback, roadmap, changelog, and workspace data through MCP.
+  humanURL: https://help.suggix.com/mcp/overview
+  baseURL: null
+  aid: suggix:suggix-mcp
+- aid: suggix:suggix-indicators-api
+  name: Suggix Indicators API
+  description: Indicator definitions and time series
+  humanURL: https://help.suggix.com/mcp/overview
+  tags:
+  - Indicators
+  properties:
+  - type: OpenAPI
+    url: openapi/suggix-indicators-api-openapi.yml
+- aid: suggix:suggix-industries-api
+  name: Suggix Industries API
+  description: ISIC Rev.4 classification
+  humanURL: https://help.suggix.com/mcp/overview
+  tags:
+  - Industries
+  properties:
+  - type: OpenAPI
+    url: openapi/suggix-industries-api-openapi.yml
+- aid: suggix:suggix-regions-api
+  name: Suggix Regions API
+  description: Countries and supranational groupings
+  humanURL: https://help.suggix.com/mcp/overview
+  tags:
+  - Regions
+  properties:
+  - type: OpenAPI
+    url: openapi/suggix-regions-api-openapi.yml
+- aid: suggix:suggix-search-api
+  name: Suggix Search API
+  description: Full-text search
+  humanURL: https://help.suggix.com/mcp/overview
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/suggix-search-api-openapi.yml
+- aid: suggix:suggix-sources-api
+  name: Suggix Sources API
+  description: Publishing organisations and their documents
+  humanURL: https://help.suggix.com/mcp/overview
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/suggix-sources-api-openapi.yml
+- aid: suggix:suggix-statistics-api
+  name: Suggix Statistics API
+  description: Data points with full provenance
+  humanURL: https://help.suggix.com/mcp/overview
+  tags:
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/suggix-statistics-api-openapi.yml
 x-submission-notes: SaaS feedback/roadmap/changelog product with documented MCP server; first-party contact
+
 x-submission-probe: root 200, MCP docs 200; soft-404 ok
+
 x-submitted-by: mike@suggix.com (apis.io/add, 2026-10-14)
+
+x-coverage:
+  state: unreadable
+  reason: no-machine-readable-spec
+  method: derived
+  generated: '2026-10-14'
+  generator: derive-coverage.py (pre-flight evidence)
+  detail: the company publishes developer documentation but serves no machine-readable contract from it
+  evidence:
+  - url: https://help.suggix.com/mcp
+    status: null
+  - url: https://www.suggix.com
+    status: 200
+x-enrichment:
+  date: '2026-10-14'
+  status: enriched
+  artifacts_added: 19
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

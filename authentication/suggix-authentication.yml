@@ -1,0 +1,16 @@
+generated: '2026-10-14'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://help.suggix.com/mcp/claude-code
+sources:
+- https://help.suggix.com/mcp/claude-code
+- https://help.suggix.com/mcp/codex
+- https://help.suggix.com/mcp/cursor
+schemes:
+- type: http-bearer
+  name: MCP API Key
+  evidence: 'Set the MCP API key in your shell environment: export SUGGIX_MCP_API_KEY = "sgx_mcp_your_key"'
+  location: header
+  header: Authorization
+  how_to_obtain: Create or revoke a workspace MCP API key in Developer Settings and set it as the environment variable SUGGIX_MCP_API_KEY.
+docs: https://help.suggix.com/mcp/claude-code

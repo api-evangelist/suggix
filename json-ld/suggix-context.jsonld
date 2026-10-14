@@ -1,0 +1,133 @@
+{
+  "@context": {
+    "@vocab": "https://suggix.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "suggix": "https://suggix.com/schema#",
+    "Statistic": "suggix:Statistic",
+    "id": {
+      "@id": "suggix:id",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "suggix:url",
+      "@type": "@id"
+    },
+    "indicator": {
+      "@id": "suggix:indicator"
+    },
+    "industry": {
+      "@id": "suggix:industry",
+      "@container": "@list"
+    },
+    "region": {
+      "@id": "suggix:region"
+    },
+    "period": {
+      "@id": "suggix:period"
+    },
+    "value": {
+      "@id": "suggix:value",
+      "@type": "xsd:decimal"
+    },
+    "value_text": {
+      "@id": "suggix:value_text",
+      "@type": "xsd:string"
+    },
+    "unit": {
+      "@id": "suggix:unit",
+      "@type": "xsd:string"
+    },
+    "currency": {
+      "@id": "suggix:currency",
+      "@type": "xsd:string"
+    },
+    "scale": {
+      "@id": "suggix:scale",
+      "@type": "xsd:string"
+    },
+    "value_type": {
+      "@id": "suggix:value_type",
+      "@type": "xsd:string"
+    },
+    "source": {
+      "@id": "suggix:source"
+    },
+    "verification": {
+      "@id": "suggix:verification",
+      "@type": "xsd:string"
+    },
+    "verified_by": {
+      "@id": "suggix:verified_by",
+      "@type": "xsd:string"
+    },
+    "verified_at": {
+      "@id": "suggix:verified_at",
+      "@type": "xsd:dateTime"
+    },
+    "confidence": {
+      "@id": "suggix:confidence",
+      "@type": "xsd:decimal"
+    },
+    "is_secondhand": {
+      "@id": "suggix:is_secondhand",
+      "@type": "xsd:boolean"
+    },
+    "supersedes": {
+      "@id": "suggix:supersedes",
+      "@type": "xsd:string"
+    },
+    "superseded_by": {
+      "@id": "suggix:superseded_by",
+      "@type": "xsd:string"
+    },
+    "is_current": {
+      "@id": "suggix:is_current",
+      "@type": "xsd:boolean"
+    },
+    "citation": {
+      "@id": "suggix:citation"
+    },
+    "updated_at": {
+      "@id": "suggix:updated_at",
+      "@type": "xsd:dateTime"
+    },
+    "Meta": "suggix:Meta",
+    "total": {
+      "@id": "suggix:total",
+      "@type": "xsd:integer"
+    },
+    "limit": {
+      "@id": "suggix:limit",
+      "@type": "xsd:integer"
+    },
+    "next_cursor": {
+      "@id": "suggix:next_cursor",
+      "@type": "xsd:string"
+    },
+    "attribution": {
+      "@id": "suggix:attribution",
+      "@type": "xsd:string"
+    },
+    "license": {
+      "@id": "suggix:license",
+      "@type": "@id"
+    },
+    "docs": {
+      "@id": "suggix:docs",
+      "@type": "@id"
+    },
+    "Error": "suggix:Error",
+    "error": {
+      "@id": "suggix:error"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Suggix API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Suggix's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/suggix-openapi.json.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/suggix-openapi.json"
+  ]
+}

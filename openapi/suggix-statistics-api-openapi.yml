@@ -1,0 +1,403 @@
+openapi: 3.2.0
+info:
+  title: StatOrigin Statistics API
+  version: 1.0.0
+  summary: Free, open industry statistics with complete primary-source provenance.
+  description: 'Every response carries the full provenance of each data point: the publishing
+
+    organisation, report title, publication date, page or table locator, the verbatim
+
+    sentence the value was extracted from, and a working link to the original document.'
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  contact:
+    name: StatOrigin
+    url: https://statorigin.org
+servers:
+- url: https://statorigin.org/api/v1
+tags:
+- name: Statistics
+  description: Data points with full provenance
+paths:
+  /statistics:
+    get:
+      tags:
+      - Statistics
+      summary: Query statistics
+      description: The main endpoint. Returns published, verified data points matching the filters, each with complete provenance.
+      operationId: queryStatistics
+      parameters:
+      - name: industry
+        in: query
+        schema:
+          type: string
+        description: Industry slug. Comma-separate for multiple.
+        example: electric-vehicles
+      - name: region
+        in: query
+        schema:
+          type: string
+        description: Region code or slug. Comma-separate for multiple.
+        example: CN,US
+      - name: indicator
+        in: query
+        schema:
+          type: string
+        description: Indicator slug
+        example: global-ev-annual-sales
+      - name: year
+        in: query
+        schema:
+          type: string
+        description: Single year or inclusive range
+        example: 2020..2026
+      - name: value_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - actual
+          - estimate
+          - forecast
+      - name: source_org
+        in: query
+        schema:
+          type: string
+        description: Source organisation slug
+        example: international-energy-agency
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 500
+          default: 50
+      - name: cursor
+        in: query
+        schema:
+          type: string
+        description: Opaque cursor from a previous `meta.next_cursor`
+      responses:
+        '200':
+          description: Matching data points
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Statistic'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Daily quota exhausted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /statistics/{id}:
+    get:
+      tags:
+      - Statistics
+      summary: Get one data point
+      description: Returns a single record plus any sources that disagree with it.
+      operationId: getStatistic
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: stat_01JBXK7Y3Q8M2N4P6R8T0V2W4X
+      responses:
+        '200':
+          description: The record
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Statistic'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            docs:
+              type: string
+              format: uri
+    Statistic:
+      type: object
+      required:
+      - id
+      - url
+      - indicator
+      - region
+      - period
+      - value
+      - unit
+      - source
+      - citation
+      properties:
+        id:
+          type: string
+          examples:
+          - stat_01JBXK7Y3Q8M2N4P6R8T0V2W4X
+        url:
+          type: string
+          format: uri
+        indicator:
+          type: object
+          properties:
+            slug:
+              type: string
+            name:
+              type: string
+            definition:
+              type:
+              - string
+              - 'null'
+        industry:
+          type: array
+          items:
+            type: object
+            properties:
+              slug:
+                type: string
+              name:
+                type: string
+              isic:
+                type: string
+                description: ISIC Rev.4 code
+              is_primary:
+                type: boolean
+        region:
+          type: object
+          properties:
+            code:
+              type: string
+            name:
+              type: string
+            type:
+              type: string
+              enum:
+              - world
+              - country
+              - bloc
+              - subnational
+        period:
+          type: object
+          properties:
+            start:
+              type: string
+              format: date
+            end:
+              type: string
+              format: date
+            type:
+              type: string
+              enum:
+              - year
+              - quarter
+              - month
+              - point
+              - range
+        value:
+          type: number
+        value_text:
+          type:
+          - string
+          - 'null'
+          description: The source's own phrasing, preserved verbatim
+        unit:
+          type: string
+          examples:
+          - count
+          - USD
+          - percent
+          - GWh
+        currency:
+          type:
+          - string
+          - 'null'
+        scale:
+          type: string
+          enum:
+          - '1'
+          - thousand
+          - million
+          - billion
+          - trillion
+        value_type:
+          type: string
+          enum:
+          - actual
+          - estimate
+          - forecast
+        source:
+          type: object
+          description: Complete provenance. Never omitted.
+          properties:
+            org:
+              type: string
+            org_short_name:
+              type:
+              - string
+              - 'null'
+            org_url:
+              type:
+              - string
+              - 'null'
+              format: uri
+            org_tier:
+              type: integer
+              minimum: 1
+              maximum: 4
+            document_title:
+              type: string
+            document_url:
+              type: string
+              format: uri
+            document_type:
+              type: string
+            locator:
+              type:
+              - string
+              - 'null'
+              description: Page, table or section
+            quote:
+              type:
+              - string
+              - 'null'
+              description: Verbatim quotation for quote evidence; explicitly labelled generated description for dataset evidence
+            evidence_type:
+              type: string
+              enum:
+              - quote
+              - dataset
+              description: How the value is evidenced
+            dataset_query:
+              type:
+              - object
+              - 'null'
+              additionalProperties: true
+              description: Dataset code and keys selecting the unique observation
+            dataset_evidence:
+              type:
+              - object
+              - 'null'
+              additionalProperties: true
+              description: Publisher response URL, version, retrieval time, SHA-256, schema mapping and methodology URL
+            published_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            accessed_at:
+              type: string
+              format: date
+            license:
+              type:
+              - string
+              - 'null'
+            url_status:
+              type: string
+              enum:
+              - ok
+              - redirect
+              - dead
+            self_reported:
+              type: boolean
+              description: True when the publisher reports on itself (a company's own results or operations) rather than on the market. Industry hub pages exclude these; they remain available here and on the publisher's page.
+        verification:
+          type: string
+          enum:
+          - pending
+          - verified
+          - disputed
+          - rejected
+        verified_by:
+          type:
+          - string
+          - 'null'
+        verified_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        confidence:
+          type:
+          - number
+          - 'null'
+          minimum: 0
+          maximum: 1
+        is_secondhand:
+          type: boolean
+          description: True when the figure was relayed from a secondary source
+        supersedes:
+          type:
+          - string
+          - 'null'
+          description: Id of the older record this one corrected, if any
+        superseded_by:
+          type:
+          - string
+          - 'null'
+          description: Id of the newer record that corrected this one. Non-null means this record is no longer current; its URL still resolves.
+        is_current:
+          type: boolean
+          description: False once superseded_by is set
+        citation:
+          type: object
+          properties:
+            apa:
+              type: string
+            bibtex:
+              type: string
+        updated_at:
+          type: string
+          format: date-time
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        attribution:
+          type: string
+        license:
+          type: string
+          format: uri
+        docs:
+          type: string
+          format: uri

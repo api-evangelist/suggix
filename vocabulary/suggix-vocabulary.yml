@@ -1,0 +1,56 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/suggix-openapi.json
+vocabulary:
+  name: Suggix Domain Vocabulary
+  description: 'Terms declared by Suggix''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: Statistics
+    definition: Data points with full provenance
+    tags:
+    - Resource Group
+    source: openapi/suggix-openapi.json
+  - term: Industries
+    definition: ISIC Rev.4 classification
+    tags:
+    - Resource Group
+    source: openapi/suggix-openapi.json
+  - term: Indicators
+    definition: Indicator definitions and time series
+    tags:
+    - Resource Group
+    source: openapi/suggix-openapi.json
+  - term: Sources
+    definition: Publishing organisations and their documents
+    tags:
+    - Resource Group
+    source: openapi/suggix-openapi.json
+  - term: Regions
+    definition: Countries and supranational groupings
+    tags:
+    - Resource Group
+    source: openapi/suggix-openapi.json
+  - term: Search
+    definition: Full-text search
+    tags:
+    - Resource Group
+    source: openapi/suggix-openapi.json
+  - term: Statistic
+    definition: 'Object declared by the contract with fields: id, url, indicator, industry, region, period, value, value_text, unit, currency,
+      scale, value_type. (11 more)'
+    tags:
+    - Object
+    source: openapi/suggix-openapi.json#/components/schemas/Statistic
+  - term: Meta
+    definition: 'Object declared by the contract with fields: total, limit, next_cursor, attribution, license, docs.'
+    tags:
+    - Object
+    source: openapi/suggix-openapi.json#/components/schemas/Meta
+  - term: Error
+    definition: 'Object declared by the contract with fields: error.'
+    tags:
+    - Object
+    source: openapi/suggix-openapi.json#/components/schemas/Error

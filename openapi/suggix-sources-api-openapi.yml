@@ -1,0 +1,120 @@
+openapi: 3.2.0
+info:
+  title: StatOrigin Sources API
+  version: 1.0.0
+  summary: Free, open industry statistics with complete primary-source provenance.
+  description: 'Every response carries the full provenance of each data point: the publishing
+
+    organisation, report title, publication date, page or table locator, the verbatim
+
+    sentence the value was extracted from, and a working link to the original document.'
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  contact:
+    name: StatOrigin
+    url: https://statorigin.org
+servers:
+- url: https://statorigin.org/api/v1
+tags:
+- name: Sources
+  description: Publishing organisations and their documents
+paths:
+  /sources:
+    get:
+      tags:
+      - Sources
+      summary: List source organisations
+      operationId: listSources
+      parameters:
+      - name: tier
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 4
+      responses:
+        '200':
+          description: Organisation list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+  /sources/{slug}:
+    get:
+      tags:
+      - Sources
+      summary: Get one source organisation
+      operationId: getSource
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 500
+          default: 100
+      responses:
+        '200':
+          description: Organisation, its documents and its statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            docs:
+              type: string
+              format: uri
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        attribution:
+          type: string
+        license:
+          type: string
+          format: uri
+        docs:
+          type: string
+          format: uri

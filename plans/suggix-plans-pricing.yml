@@ -1,0 +1,48 @@
+generated: '2026-10-14'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://www.suggix.com/pricing
+sources:
+- https://www.suggix.com/pricing
+name: Suggix pricing
+audience: business-product
+pricing_basis: per-seat
+plans:
+- name: Free
+  price_text: Free
+  description: For indie makers and small teams getting started with feedback.
+  features:
+  - Unlimited End Users
+  - 100 Posts
+  - 1 Board
+  - 1 Admin
+- name: Starter
+  price_text: $29
+  price: 29
+  description: For small startups needing more control and customization.
+  features:
+  - Unlimited End Users
+  - Unlimited Posts
+  - 3 Boards
+  - 2 Admins
+- name: Growth
+  price_text: $79
+  price: 79
+  description: For growing teams wanting insights and a branded experience.
+  features:
+  - Unlimited End Users
+  - Unlimited Posts
+  - 8 Boards
+  - 6 Admins
+- name: Business
+  price_text: $199
+  price: 199
+  description: For product organizations needing automation and collaboration.
+  features:
+  - Unlimited End Users
+  - Unlimited Posts
+  - Unlimited Boards
+  - 10 Admins
+  - Custom domains
+  - Remove branding
+docs: https://www.suggix.com/pricing
