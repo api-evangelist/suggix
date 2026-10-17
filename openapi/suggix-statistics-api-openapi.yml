@@ -138,19 +138,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            docs:
-              type: string
-              format: uri
     Statistic:
       type: object
       required:
@@ -382,6 +369,19 @@ components:
         updated_at:
           type: string
           format: date-time
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            docs:
+              type: string
+              format: uri
     Meta:
       type: object
       properties:
